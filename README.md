@@ -1,87 +1,117 @@
-<<<<<<< HEAD
-# Google Form - AnswerFlow 🤖📝
+# AnswerFlow 🤖📝
 
-**AnswerFlow** เป็นโปรเจกต์ที่ช่วยเติมคำตอบใน Google Form โดยอัตโนมัติด้วยพลังของ AI (Google Gemini) โปรเจกต์นี้ประกอบด้วยส่วนของ Server (Python Flask) ที่ทำหน้าที่คุยกับ AI และส่วนของ Browser Script (JavaScript) ที่ทำงานบนหน้าเว็บ Google Form
+**AnswerFlow** is an AI-powered assistant that automatically fills answers in Google Forms using **Google Gemini**. The project consists of two main components:
 
-## 📦 สิ่งที่ต้องเตรียม (Prerequisites)
+* **Server**: Python (Flask) — communicates with the Gemini API
+* **Browser Script**: JavaScript — runs directly on the Google Form page
 
-1.  **Python 3.8+**: [ดาวน์โหลด Python](https://www.python.org/downloads/)
-2.  **Google AI Studio API Key**: จำเป็นต้องมีเพื่อใช้งาน Gemini API (ดูวิธีขอรับด้านล่าง)
-
----
-
-## 🚀 การติดตั้ง (Installation)
-
-1.  **Clone หรือดาวน์โหลดโปรเจกต์นี้** มาไว้ที่เครื่องของคุณ
-2.  **ติดตั้ง Library ที่จำเป็น** โดยเปิด CMD หรือ Terminal ในโฟลเดอร์โปรเจกต์ แล้วรันคำสั่ง:
-
-    ```bash
-    pip install -r requirement.txt
-    ```
-
-3.  **ตั้งค่า Environment Variables**:
-    - สร้างไฟล์ `.env` ที่ root folder ของโปรเจกต์ (ถ้ายังไม่มี)
-    - เพิ่มโค้ดตั้งค่าดังนี้ลงในไฟล์ `.env`:
-
-    ```env
-    API_KEY=YOUR_GEMINI_API_KEY_HERE
-    HOST=127.0.0.1
-    PORT=5000
-    ```
-
-    _(แทนที่ `YOUR_GEMINI_API_KEY_HERE` ด้วย Key ที่ได้จากขั้นตอนถัดไป)_
+> Purpose: educational use and productivity assistance.
 
 ---
 
-## 🔑 วิธีขอ API Key ใน Google AI Studio
+## Features
 
-หากคุณยังไม่มี API Key สามารถทำตามขั้นตอนนี้ได้ฟรี:
-
-1.  ไปที่เว็บไซต์ **[Google AI Studio](https://aistudio.google.com/)**
-2.  คลิกปุ่ม **"Sign in to Google AI Studio"** และเข้าสู่ระบบด้วย Google Account ของคุณ
-3.  หลังจากเข้าสู่ระบบ ให้สังเกตเมนูด้านซ้ายบน หรือปุ่ม **"Get API key"** (ไอคอนกุญแจ 🗝️)
-4.  คลิกที่ **"Create API key"**
-    - หากคุณมีโปรเจกต์ใน Google Cloud อยู่แล้ว สามารถเลือกเชื่อมต่อได้
-    - หรือเลือก **"Create API key in new project"** เพื่อสร้างใหม่เลยก็ได้ (ง่ายที่สุด)
-5.  ระบบจะแสดงรหัส **API Key** ขึ้นมา (เป็นตัวอักษรยาวๆ)
-6.  กด **Copy** เก็บไว้ทันที แล้วนำไปวางในไฟล์ `.env` ตรงช่อง `API_KEY`
+* One-click auto answering for Google Forms
+* AI-driven question analysis (Gemini)
+* Local server architecture (no cloud deployment required)
+* Low-temperature configuration for factual, consistent answers
 
 ---
 
-## 💡 วิธีใช้งาน (Usage)
+## Prerequisites
 
-### 1. รัน Server (Python)
+* **Python 3.8+**
+* **Google AI Studio (Gemini) API Key**
+* Modern browser (Chrome recommended)
 
-เปิด CMD แล้วรันคำสั่ง:
+---
+
+## Installation
+
+1. **Clone or download** this repository.
+2. **Install dependencies**:
+
+```bash
+pip install -r requirement.txt
+```
+
+3. **Environment configuration**:
+
+Create a `.env` file in the project root and add:
+
+```env
+API_KEY=YOUR_GEMINI_API_KEY
+HOST=127.0.0.1
+PORT=5000
+```
+
+Replace `YOUR_GEMINI_API_KEY` with your actual key.
+
+---
+
+## Getting a Gemini API Key
+
+1. Visit **Google AI Studio**: [https://aistudio.google.com/](https://aistudio.google.com/)
+2. Sign in with your Google account.
+3. Click **Get API key** (key icon).
+4. Select **Create API key**.
+
+   * Either link to an existing Google Cloud project
+   * Or create a new project (recommended for simplicity)
+5. Copy the generated API key and store it in `.env`.
+
+---
+
+## Usage
+
+### 1. Start the Server
 
 ```bash
 python Api.py
 ```
 
-หากสำเร็จ จะขึ้นข้อความว่า Server กำลังรันอยู่ที่ `http://127.0.0.1:5000`
+If successful, the server will run at:
 
-### 2. ติดตั้ง Script บน Google Form
-
-1.  เปิด Google Form ที่ต้องการตอบ
-2.  กดปุ่ม **F12** เพื่อเปิด Developer Tools
-3.  ไปที่แท็บ **Console**
-4.  คัดลอกโค้ดทั้งหมดจากไฟล์ `Command.js` ไปวางใน Console แล้วกด **Enter**
-5.  จะปรากฏปุ่ม **"AnswerFlow AI Assistant"** (หรือไอคอนใหม่) แทนที่ปุ่มช่วยเหลือเดิม
-
-### 3. เริ่มใช้งาน
-
-1.  คลิกที่ปุ่มไอคอน **AnswerFlow** เพื่อเปิดแผงควบคุม
-2.  กดปุ่ม **"🚀 Start Auto Answer"**
-3.  AI จะวิเคราะห์คำถามและเลือกคำตอบให้อัตโนมัติ!
+```
+http://127.0.0.1:5000
+```
 
 ---
 
-## ⚠️ หมายเหตุ
+### 2. Inject the Browser Script
 
-- โปรเจกต์นี้ใช้สำหรับการศึกษาและอำนวยความสะดวกเท่านั้น
-- ตรวจสอบคำตอบอีกครั้งก่อนกดส่งฟอร์มทุกครั้ง
-- ค่า `temperature=0.2` ถูกตั้งไว้เพื่อให้ AI ตอบตามข้อเท็จจริงและแม่นยำที่สุด
-=======
-# Answer-Flow
-Google Form 1 Click To Answer
->>>>>>> 2f173bab6bcc4e8a0412a58d90d0e9e0f1657112
+1. Open the target **Google Form**.
+2. Press **F12** to open Developer Tools.
+3. Go to the **Console** tab.
+4. Copy all code from `Command.js` and paste it into the console.
+5. Press **Enter**.
+6. A new button labeled **"AnswerFlow AI Assistant"** will appear.
+
+---
+
+### 3. Auto-Answer the Form
+
+1. Click the **AnswerFlow** button.
+2. Press **Start Auto Answer**.
+3. The AI will analyze each question and select the most appropriate answer automatically.
+
+---
+
+## Configuration Notes
+
+* `temperature = 0.2` is used to keep answers factual and deterministic.
+* The server runs locally; no form data is stored permanently.
+
+---
+
+## Disclaimer
+
+* This project is intended for **educational and productivity purposes only**.
+* Always review answers before submitting any form.
+* Misuse may violate the terms of service of Google Forms.
+
+---
+
+## Project Name
+
+**AnswerFlow** — One Click AI Answers for Google Forms
