@@ -2,7 +2,7 @@ const CONFIG = {
     debug: false,
     autorefresh: true,
     model: 'gemini-2.5-flash',
-    apiKey: 'AIzaSyCyKFbhbpSyTJ4MGKJt2PgDzjIGhARIsL0',
+    apiKey: '',
     systemPrompt: `คุณคือผู้เชี่ยวชาญด้าน IT และ คณิตศาสตร์ และ ด้านภาษา
 
 กฎการตอบ:
