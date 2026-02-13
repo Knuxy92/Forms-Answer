@@ -1,117 +1,196 @@
-# AnswerFlow 🤖📝
-
-**AnswerFlow** is an AI-powered assistant that automatically fills answers in Google Forms using **Google Gemini**. The project consists of two main components:
-
-* **Server**: Python (Flask) — communicates with the Gemini API
-* **Browser Script**: JavaScript — runs directly on the Google Form page
-
-> Purpose: educational use and productivity assistance.
+Below is the properly formatted **README.md** file content (clean Markdown, production-ready, no instructional commentary outside the document).
 
 ---
 
-## Features
+```markdown
+# Google Form 1-Click Auto Answer
 
-* One-click auto answering for Google Forms
-* AI-driven question analysis (Gemini)
-* Local server architecture (no cloud deployment required)
-* Low-temperature configuration for factual, consistent answers
+A lightweight automation tool that enables one-click answering for Google Forms.
+
+The system combines a local Python API server with a browser-injected JavaScript layer to automate form filling in a controlled environment.
 
 ---
 
-## Prerequisites
+## Overview
 
-* **Python 3.8+**
-* **Google AI Studio (Gemini) API Key**
-* Modern browser (Chrome recommended)
+This project consists of two primary components:
+
+- **Backend (Python API Server)** — Provides answer logic and local HTTP endpoints.
+- **Frontend (Browser Injection Script)** — Executes inside the Google Form page and performs DOM automation.
+
+This repository is intended for automation research, testing workflows, and controlled internal usage.
+
+---
+
+## Architecture
+
+### Backend Layer
+
+- `Api.py`
+- Runs a local HTTP server
+- Supplies answer data to the browser script
+- Processes logic for answer generation (static, dynamic, or rule-based)
+
+### Frontend Layer
+
+- `Command.js`
+- `oneclick.js`
+- Injected directly into a Google Form page
+- Detects questions
+- Fills answers programmatically
+- Optionally submits the form
+
+---
+
+## Repository Structure
+
+```
+
+.
+├── Api.py              # Python backend service
+├── Command.js          # Browser injection loader
+├── oneclick.js         # Core one-click automation logic
+├── requirement.txt     # Python dependencies
+├── LICENSE
+└── README.md
+
+````
+
+---
+
+# One-Click Mechanism
+
+The one-click system executes the entire answer workflow with a single user action.
+
+## Execution Flow
+
+1. `Command.js` is injected into the Google Form page.
+2. It initializes or loads `oneclick.js`.
+3. `oneclick.js` scans the DOM for questions.
+4. Answers are resolved (static, random, or API-driven).
+5. Fields are filled programmatically.
+6. Optional submission is triggered.
+
+---
+
+## How `oneclick.js` Works
+
+### 1. DOM Inspection
+
+The script queries form elements such as:
+
+- `input[type="radio"]`
+- `input[type="checkbox"]`
+- `textarea`
+- `input[type="text"]`
+
+Each question is mapped internally based on detected type and structure.
+
+---
+
+### 2. Answer Resolution
+
+Answer sources may include:
+
+- Hardcoded logic
+- Randomized selection
+- API request to local server
+
+Example pattern:
+
+```javascript
+fetch("http://127.0.0.1:5000/answers")
+  .then(res => res.json())
+  .then(data => applyAnswers(data));
+````
+
+---
+
+### 3. Programmatic Interaction
+
+To ensure proper state updates, the script:
+
+* Sets `.value`
+* Dispatches `input` and `change` events
+* Triggers click events when necessary
+
+Example:
+
+```javascript
+element.click();
+element.dispatchEvent(new Event('change', { bubbles: true }));
+```
+
+This ensures compatibility with Google Form’s internal event handling.
+
+---
+
+### 4. Optional Submission
+
+If enabled, the script locates and triggers the submit button:
+
+```javascript
+document.querySelector('[role="button"]').click();
+```
+
+Review before enabling auto-submission.
 
 ---
 
 ## Installation
 
-1. **Clone or download** this repository.
-2. **Install dependencies**:
+### Clone Repository
+
+```bash
+git clone https://github.com/Knuxy92/Forms-Answer.git
+cd Forms-Answer
+```
+
+### Install Dependencies
 
 ```bash
 pip install -r requirement.txt
 ```
 
-3. **Environment configuration**:
-
-Create a `.env` file in the project root and add:
-
-```env
-API_KEY=YOUR_GEMINI_API_KEY
-HOST=127.0.0.1
-PORT=5000
-```
-
-Replace `YOUR_GEMINI_API_KEY` with your actual key.
-
 ---
 
-## Getting a Gemini API Key
-
-1. Visit **Google AI Studio**: [https://aistudio.google.com/](https://aistudio.google.com/)
-2. Sign in with your Google account.
-3. Click **Get API key** (key icon).
-4. Select **Create API key**.
-
-   * Either link to an existing Google Cloud project
-   * Or create a new project (recommended for simplicity)
-5. Copy the generated API key and store it in `.env`.
-
----
-
-## Usage
-
-### 1. Start the Server
+## Running the Backend Server
 
 ```bash
 python Api.py
 ```
 
-If successful, the server will run at:
-
-```
-http://127.0.0.1:5000
-```
+The API server will start locally (commonly `127.0.0.1:5000`).
 
 ---
 
-### 2. Inject the Browser Script
+## Injecting the Automation Script
 
-1. Open the target **Google Form**.
-2. Press **F12** to open Developer Tools.
+1. Open the target Google Form.
+2. Open Developer Tools (`F12`).
 3. Go to the **Console** tab.
-4. Copy all code from `Command.js` and paste it into the console.
-5. Press **Enter**.
-6. A new button labeled **"AnswerFlow AI Assistant"** will appear.
+4. Copy the contents of `Command.js`.
+5. Paste into the console and press Enter.
+6. The one-click automation interface initializes.
 
 ---
 
-### 3. Auto-Answer the Form
+## Limitations
 
-1. Click the **AnswerFlow** button.
-2. Press **Start Auto Answer**.
-3. The AI will analyze each question and select the most appropriate answer automatically.
-
----
-
-## Configuration Notes
-
-* `temperature = 0.2` is used to keep answers factual and deterministic.
-* The server runs locally; no form data is stored permanently.
+* Does not bypass authentication or Google security.
+* Fully dependent on current Google Form DOM structure.
+* Google may update form internals at any time.
+* Intended for controlled or authorized environments only.
 
 ---
 
-## Disclaimer
+## License
 
-* This project is intended for **educational and productivity purposes only**.
-* Always review answers before submitting any form.
-* Misuse may violate the terms of service of Google Forms.
+MIT License
+
+```
 
 ---
 
-## Project Name
-
-**AnswerFlow** — One Click AI Answers for Google Forms
+If you want a more enterprise-grade README (with badges, API schema table, versioning, CI instructions, contribution guidelines, etc.), I can provide that version as well.
+```
