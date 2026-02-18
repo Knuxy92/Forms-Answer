@@ -1,5 +1,8 @@
+
+
+
 const CONFIG = {
-    debug: false,
+    debug: true,
     autorefresh: true,
     model: 'gemini-2.5-flash',
     apiKey: '',
@@ -99,7 +102,7 @@ class ProgressTracker {
 class QuestionScraper {
     scrapeAll() {
         const blocks = document.querySelectorAll(CONFIG.selectors.questionBlock);
-        Logger.info(`พบคำถามทั้งหมด ${blocks.length} ข้อ`);
+        Logger.info(`Found ${blocks.length} Clause`);
         
         return Array.from(blocks).map((block, index) => this.scrapeQuestion(block, index + 1));
     }
@@ -126,7 +129,7 @@ class AnswerSelector {
     selectAnswer(questionNo, answerText) {
         const block = this.getQuestionBlock(questionNo);
         if (!block) {
-            Logger.warning(`ไม่พบคำถามข้อที่ ${questionNo}`);
+            Logger.warning(`Not Found ${questionNo}`);
             this.tracker.incrementFail();
             return;
         }
@@ -165,15 +168,15 @@ class AnswerSelector {
     
     getOptionText(option) {
         return option.getAttribute('aria-label')?.trim() ||
-               option.innerText?.trim() ||
-               option.querySelector('span')?.innerText?.trim() ||
-               '';
+            option.innerText?.trim() ||
+            option.querySelector('span')?.innerText?.trim() ||
+            '';
     }
 }
 
 class AIClient {
     async getAnswers(questions) {
-        Logger.info('📤 กำลังส่งคำถามไปยัง AI...');
+        Logger.info('Send AI...');
         
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${CONFIG.model}:generateContent?key=${CONFIG.apiKey}`;
         
@@ -191,10 +194,10 @@ class AIClient {
         
         const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!rawText) {
-            throw new Error('ไม่ได้รับคำตอบจาก AI');
+            throw new Error('Not Receive AI');
         }
         
-        Logger.success('📥 ได้รับคำตอบจาก AI แล้ว');
+        Logger.success('Receive AI');
         return JSON.parse(rawText);
     }
     
