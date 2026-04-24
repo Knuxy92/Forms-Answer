@@ -1,19 +1,17 @@
-
-
-
 const CONFIG = {
     debug: true,
     autorefresh: true,
     model: 'gemini-2.5-flash',
     apiKey: '',
-    systemPrompt: `คุณคือผู้เชี่ยวชาญด้าน IT และ คณิตศาสตร์ และ ด้านภาษา
-
-กฎการตอบ:
-1. ตอบในรูปแบบ JSON เท่านั้น (Single Flat Object)
-2. รูปแบบคือ {"ข้อที่": "คำตอบ"} เช่น {"1":"ถูก", "2":"ผิด"}
-3. คำตอบต้องเลือกจากตัวเลือกที่โจทย์มีให้เท่านั้น (ตรงกันทุกตัวอักษร)
-4. หากไม่มีข้อมูลในความรู้ที่ให้ไป ให้ใช้ความรู้พื้นฐานของคุณตอบ`,
-    
+    systemPrompt: `You are an expert in IT, Mathematics, and Languages.
+Response Rules:
+1. Reply in JSON format only — single flat object
+2. Format: {"question_number": "answer"} e.g. {"1": "True", "2": "False"}
+3. Answer must exactly match one of the provided choices (character-for-character)
+4. Every question must have an answer — never skip or leave blank
+5. For single-choice questions, pick the single best answer
+6. For multiple-choice questions, pick all correct answers separated by "|" e.g. "A|C"
+7. If no knowledge is provided, use your own base knowledge to answer`,
     selectors: {
         questionBlock: '.geS5n',
         questionTitle: 'div[role="heading"] span',
