@@ -8,7 +8,7 @@
 ## Credit
 
 Developed by: **Knuxy92**  
-Last updated: `04/25/26`
+Last updated: `06/04/26`
 
 ---
 
@@ -50,7 +50,7 @@ Edit the `CONFIG` block at the top of `Script.js` before running:
 | Multiple Choice (radio) | ✅ |
 | Checkboxes | ✅ |
 | Dropdown | ⚠️ Partial |
-| Short Answer / Paragraph | ❌ |
+| Short Answer / Paragraph | ✅ |
 
 ---
 
