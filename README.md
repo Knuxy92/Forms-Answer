@@ -8,7 +8,7 @@
 ## Credit
 
 Developed by: **Knuxy92**  
-Last updated: `06/04/26`
+Last updated: `08/03/26`
 
 ---
 
@@ -30,14 +30,22 @@ No backend server required.
 
 ---
 
+## How to get your Gemini API key
+
+1. Go to [Google AI Studio](https://aistudio.google.com/api-keys)
+2. Sign in with your Google account
+3. Navigate to the **API keys** section
+4. Click **Create API key** and follow the prompts
+5. Copy the generated API key and use it in the `CONFIG` block
+
 ## Configuration
 
-Edit the `CONFIG` block at the top of `Script.js` before running:
+Edit the `CONFIG` block at the top of `oneclick.js` before running:
 
 | Key | Description | Default |
 |-----|-------------|---------|
 | `apiKey` | Your Gemini API key | `""` |
-| `model` | Gemini model to use | `gemini-2.5-flash` |
+| `model` | Gemini model to use | `gemini-3.5-flash` |
 | `debug` | Show logs in console | `true` |
 | `autorefresh` | Auto-reload page after completion | `true` |
 
